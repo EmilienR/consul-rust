@@ -31,10 +31,17 @@ pub fn get_vec<R: DeserializeOwned>(
     let datacenter: Option<&String> = options
         .and_then(|o| o.datacenter.as_ref())
         .or(config.datacenter.as_ref());
-
     if let Some(dc) = datacenter {
         params.insert(String::from("dc"), dc.to_owned());
     }
+
+    let namespace = options
+        .and_then(|o| o.namespace.as_ref())
+        .or(config.namespace.as_ref());
+    if let Some(ns) = namespace {
+        params.insert(String::from("ns"), ns.to_owned());
+    }
+
     if let Some(options) = options {
         if let Some(index) = options.wait_index {
             params.insert(String::from("index"), index.to_string());
@@ -95,10 +102,17 @@ pub fn get<R: DeserializeOwned>(
     let datacenter: Option<&String> = options
         .and_then(|o| o.datacenter.as_ref())
         .or(config.datacenter.as_ref());
-
     if let Some(dc) = datacenter {
         params.insert(String::from("dc"), dc.to_owned());
     }
+
+    let namespace = options
+        .and_then(|o| o.namespace.as_ref())
+        .or(config.namespace.as_ref());
+    if let Some(ns) = namespace {
+        params.insert(String::from("ns"), ns.to_owned());
+    }
+
     if let Some(options) = options {
         if let Some(index) = options.wait_index {
             params.insert(String::from("index"), index.to_string());
@@ -195,9 +209,15 @@ where
     let datacenter: Option<&String> = options
         .and_then(|o| o.datacenter.as_ref())
         .or(config.datacenter.as_ref());
-
     if let Some(dc) = datacenter {
         params.insert(String::from("dc"), dc.to_owned());
+    }
+
+    let namespace = options
+        .and_then(|o| o.namespace.as_ref())
+        .or(config.namespace.as_ref());
+    if let Some(ns) = namespace {
+        params.insert(String::from("ns"), ns.to_owned());
     }
 
     let url_str = format!("{}{}", config.address, path);
